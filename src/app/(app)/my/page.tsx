@@ -44,7 +44,7 @@ export default function MyPage() {
             😊
           </div>
           <div className="flex-1">
-            <p className="font-medium text-base">닉네임</p>
+            <p className="font-medium text-base">김예진</p>
             <p className="text-xs text-[var(--text-sub)] mt-0.5">쿨톤 · 보통 체형</p>
             <div className="flex gap-1 mt-2">
               {["캐주얼", "미니멀"].map((tag) => (

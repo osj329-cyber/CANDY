@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-const STYLING_TABS = ["코디 추천", "메이크업 추천", "헤어 추천"];
+const STYLING_TABS = ["코디 추천", "메이크업 추천", "헤어 추천", "쇼핑 연동"];
 
 const OUTFIT_REC = {
   items: [
@@ -224,6 +224,98 @@ export default function RecommendPage() {
                 </button>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* 쇼핑 연동 */}
+        {activeTab === 3 && (
+          <div className="flex flex-col gap-4">
+            {/* 없는 아이템 */}
+            <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-5">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-medium">없는 아이템</h3>
+                <span
+                  className="font-[var(--font-dm-mono)] text-[10px] px-2 py-0.5 rounded-full"
+                  style={{ background: "var(--amber-lt)", color: "var(--amber-dk)" }}
+                >
+                  1개 부족
+                </span>
+              </div>
+              <div className="flex items-center gap-3 p-3 rounded-xl" style={{ background: "var(--amber-lt)" }}>
+                <span className="text-2xl">🧥</span>
+                <div className="flex-1">
+                  <p className="text-sm font-medium">베이지 오버핏 자켓</p>
+                  <p className="text-xs mt-0.5" style={{ color: "var(--amber-dk)" }}>오늘 코디에 필요한 아이템</p>
+                </div>
+                <button
+                  className="text-xs px-3 py-1.5 rounded-full font-medium text-white flex-shrink-0"
+                  style={{ background: "var(--amber)" }}
+                >
+                  찾기
+                </button>
+              </div>
+            </div>
+
+            {/* 유사 상품 */}
+            <div className="bg-[var(--card)] rounded-2xl border border-[var(--border)] p-5">
+              <h3 className="font-medium mb-4">유사 상품 추천</h3>
+              <div className="flex flex-col gap-3">
+                {[
+                  { name: "오버핏 코튼 자켓", brand: "무신사 스탠다드", price: "39,900", emoji: "🧥" },
+                  { name: "베이지 루즈핏 자켓", brand: "ZARA", price: "89,000", emoji: "🧥" },
+                  { name: "린넨 오버핏 블레이저", brand: "COS", price: "129,000", emoji: "🧥" },
+                ].map((product, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
+                      style={{ background: "var(--amber-lt)" }}
+                    >
+                      {product.emoji}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium">{product.name}</p>
+                      <p className="text-xs text-[var(--text-sub)]">{product.brand}</p>
+                      <p className="font-[var(--font-dm-mono)] text-xs mt-0.5" style={{ color: "var(--teal)" }}>
+                        ₩{product.price}
+                      </p>
+                    </div>
+                    <button
+                      className="text-xs px-3 py-1.5 rounded-full font-medium flex-shrink-0"
+                      style={{ background: "var(--teal-lt)", color: "var(--teal-dk)" }}
+                    >
+                      구매
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 예산 코칭 */}
+            <div
+              className="rounded-2xl p-5"
+              style={{ background: "linear-gradient(135deg, var(--purple-lt), var(--teal-lt))" }}
+            >
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="font-medium text-sm">이번 달 패션 예산</h3>
+                <span
+                  className="font-[var(--font-dm-mono)] text-[9px] px-2 py-0.5 rounded-full"
+                  style={{ background: "var(--card)", color: "var(--purple-dk)" }}
+                >
+                  PREMIUM
+                </span>
+              </div>
+              <div className="flex items-end gap-2 mb-3">
+                <span className="font-[var(--font-dm-mono)] text-2xl font-medium">₩47,200</span>
+                <span className="text-xs text-[var(--text-sub)] mb-1">/ ₩100,000</span>
+              </div>
+              <div className="h-2 rounded-full overflow-hidden" style={{ background: "var(--border)" }}>
+                <div
+                  className="h-full rounded-full"
+                  style={{ width: "47%", background: "var(--purple)" }}
+                />
+              </div>
+              <p className="text-xs text-[var(--text-sub)] mt-2">이번 달 52,800원 남았어요</p>
+            </div>
           </div>
         )}
       </div>

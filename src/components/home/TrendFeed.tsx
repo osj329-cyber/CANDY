@@ -5,15 +5,16 @@ import { useState } from "react";
 const CATEGORIES = ["전체", "캐주얼", "미니멀", "페미닌", "스트리트"];
 
 const TRENDS = [
-  { id: 1, title: "린넨 셋업 룩", category: "미니멀", likes: 2841, emoji: "🤍", color: "var(--slate-lt)" },
-  { id: 2, title: "Y2K 데님 코디", category: "스트리트", likes: 1923, emoji: "💜", color: "var(--purple-lt)" },
-  { id: 3, title: "플로럴 시어 블라우스", category: "페미닌", likes: 3102, emoji: "🌸", color: "var(--pink-lt)" },
-  { id: 4, title: "오버핏 후드 조거", category: "캐주얼", likes: 1567, emoji: "🖤", color: "var(--slate-lt)" },
+  { id: 1, title: "린넨 셋업 룩", category: "미니멀", likes: 2841, emoji: "🤍", color: "var(--slate-lt)", canCopy: true },
+  { id: 2, title: "Y2K 데님 코디", category: "스트리트", likes: 1923, emoji: "💜", color: "var(--purple-lt)", canCopy: false },
+  { id: 3, title: "플로럴 시어 블라우스", category: "페미닌", likes: 3102, emoji: "🌸", color: "var(--pink-lt)", canCopy: true },
+  { id: 4, title: "오버핏 후드 조거", category: "캐주얼", likes: 1567, emoji: "🖤", color: "var(--slate-lt)", canCopy: true },
 ];
 
 export default function TrendFeed() {
   const [activeCategory, setActiveCategory] = useState("전체");
   const [saved, setSaved] = useState<number[]>([]);
+  const [copying, setCopying] = useState<number | null>(null);
 
   const filtered =
     activeCategory === "전체"
@@ -57,7 +58,7 @@ export default function TrendFeed() {
             </div>
             <div className="p-3 bg-[var(--card)]">
               <p className="text-xs font-medium leading-tight mb-1">{trend.title}</p>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between mb-2">
                 <span
                   className="font-[var(--font-dm-mono)] text-[9px] px-1.5 py-0.5 rounded-full"
                   style={{ background: "var(--bg)", color: "var(--text-sub)" }}
@@ -75,6 +76,18 @@ export default function TrendFeed() {
                   {saved.includes(trend.id) ? "🩷" : "🤍"}
                 </button>
               </div>
+              {trend.canCopy && (
+                <button
+                  onClick={() => setCopying(copying === trend.id ? null : trend.id)}
+                  className="w-full text-[10px] py-1.5 rounded-lg font-medium transition-all"
+                  style={{
+                    background: copying === trend.id ? "var(--pink)" : "var(--pink-lt)",
+                    color: copying === trend.id ? "#fff" : "var(--pink-dk)",
+                  }}
+                >
+                  {copying === trend.id ? "✓ 내 옷장으로 재현 중" : "내 옷장으로 따라하기"}
+                </button>
+              )}
             </div>
           </div>
         ))}
