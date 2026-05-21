@@ -28,6 +28,14 @@ const OUTFITS = [
 export default function TodayRecommendCard() {
   const [index, setIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<"코디" | "메이크업" | "헤어">("코디");
+  const [confirmed, setConfirmed] = useState(false);
+  const [showConfirmToast, setShowConfirmToast] = useState(false);
+
+  const handleConfirm = () => {
+    setConfirmed(true);
+    setShowConfirmToast(true);
+    setTimeout(() => setShowConfirmToast(false), 2500);
+  };
   const outfit = OUTFITS[index];
 
   return (
@@ -139,20 +147,37 @@ export default function TodayRecommendCard() {
 
         {/* 하단 버튼 */}
         <div className="px-5 pb-5 flex gap-2">
-          <button
-            className="flex-1 py-3 rounded-xl text-sm font-medium border border-[var(--border)] text-[var(--text-sub)] transition-all hover:border-[var(--border-dk)]"
-            onClick={() => setIndex((i) => (i + 1) % OUTFITS.length)}
-          >
-            다시 추천
-          </button>
-          <button
-            className="flex-1 py-3 rounded-xl text-sm font-medium text-white transition-all"
-            style={{ background: "var(--pink)" }}
-          >
-            오늘 이렇게 입을게요 ✓
-          </button>
+          {confirmed ? (
+            <div className="flex-1 py-3 rounded-xl text-sm font-medium text-center" style={{ background: "var(--teal-lt)", color: "var(--teal-dk)" }}>
+              ✓ 오늘 코디 확정됨
+            </div>
+          ) : (
+            <>
+              <button
+                className="flex-1 py-3 rounded-xl text-sm font-medium border border-[var(--border)] text-[var(--text-sub)]"
+                onClick={() => setIndex((i) => (i + 1) % OUTFITS.length)}
+              >
+                다시 추천
+              </button>
+              <button
+                className="flex-1 py-3 rounded-xl text-sm font-medium text-white"
+                style={{ background: "var(--pink)" }}
+                onClick={handleConfirm}
+              >
+                오늘 이렇게 입을게요 ✓
+              </button>
+            </>
+          )}
         </div>
       </div>
+
+      {/* 확정 토스트 */}
+      {showConfirmToast && (
+        <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-2xl text-sm font-medium text-white shadow-lg"
+          style={{ background: "var(--teal)", whiteSpace: "nowrap" }}>
+          🎉 오늘 코디가 룩북에 저장됐어요!
+        </div>
+      )}
 
       {/* 대안 코디 슬라이드 인디케이터 */}
       <div className="flex justify-center gap-1.5 mt-3">

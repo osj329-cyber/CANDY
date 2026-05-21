@@ -1,8 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import WeatherWidget from "@/components/home/WeatherWidget";
 import TodayRecommendCard from "@/components/home/TodayRecommendCard";
 import TrendFeed from "@/components/home/TrendFeed";
+import SearchOverlay from "@/components/SearchOverlay";
 
 export default function HomePage() {
+  const [showSearch, setShowSearch] = useState(false);
+
   return (
     <div className="flex flex-col">
       {/* 헤더 */}
@@ -15,10 +21,20 @@ export default function HomePage() {
             CANDY
           </h1>
         </div>
-        <button className="w-9 h-9 rounded-full bg-[var(--bg)] border border-[var(--border)] flex items-center justify-center">
-          <BellIcon />
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowSearch(true)}
+            className="w-9 h-9 rounded-full bg-[var(--bg)] border border-[var(--border)] flex items-center justify-center"
+          >
+            <SearchIcon />
+          </button>
+          <button className="w-9 h-9 rounded-full bg-[var(--bg)] border border-[var(--border)] flex items-center justify-center">
+            <BellIcon />
+          </button>
+        </div>
       </header>
+
+      {showSearch && <SearchOverlay onClose={() => setShowSearch(false)} />}
 
       <div className="px-4 py-4 flex flex-col gap-5">
         {/* 날씨·일정 위젯 */}
@@ -31,6 +47,14 @@ export default function HomePage() {
         <TrendFeed />
       </div>
     </div>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg className="w-5 h-5 text-[var(--text-sub)]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0Z" />
+    </svg>
   );
 }
 
