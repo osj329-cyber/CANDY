@@ -5,9 +5,11 @@ import WeatherWidget from "@/components/home/WeatherWidget";
 import TodayRecommendCard from "@/components/home/TodayRecommendCard";
 import TrendFeed from "@/components/home/TrendFeed";
 import SearchOverlay from "@/components/SearchOverlay";
+import FeedbackSheet from "@/components/FeedbackSheet";
 
 export default function HomePage() {
   const [showSearch, setShowSearch] = useState(false);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   return (
     <div className="flex flex-col">
@@ -28,13 +30,17 @@ export default function HomePage() {
           >
             <SearchIcon />
           </button>
-          <button className="w-9 h-9 rounded-full bg-[var(--bg)] border border-[var(--border)] flex items-center justify-center">
+          <button
+            onClick={() => setShowFeedback(true)}
+            className="w-9 h-9 rounded-full bg-[var(--bg)] border border-[var(--border)] flex items-center justify-center"
+          >
             <BellIcon />
           </button>
         </div>
       </header>
 
       {showSearch && <SearchOverlay onClose={() => setShowSearch(false)} />}
+      {showFeedback && <FeedbackSheet onClose={() => setShowFeedback(false)} />}
 
       <div className="px-4 py-4 flex flex-col gap-5">
         {/* 날씨·일정 위젯 */}
